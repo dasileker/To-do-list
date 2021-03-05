@@ -1,35 +1,40 @@
 import './styles.scss';
 
-console.log('Webpack works!');
+// console.log('Webpack works!');
 
-const projects = [];
+let projects ;
+
+if (localStorage.getItem('projects') == null) {
+  projects = [];
+  console.log('no local storeg');
+} else {
+  projects = JSON.parse(localStorage.getItem('projects'))
+  console.log('local storage present');
+  console.log({ projects });
+}
+
+
 
 const todoFactory = (title, duedate, desc, note, priority) => ({
   title, duedate, desc, note, priority,
 });
 
 const projectFactory = (name) => {
+  // getData();
   const list = [];
   return { name, list };
 };
 
-const defaultProject = projectFactory('default');
-const cleaning = projectFactory('cleaning');
-const cooking = projectFactory('cooking');
+const saveData = () => {
+  localStorage.setItem('projects', JSON.stringify(projects))
+}
 
-projects.push(defaultProject);
-projects.push(cleaning);
-projects.push(cooking);
-
-const room1 = todoFactory('Clean my room', '1/2/2021', 'test', 'a', 'Low');
-const room2 = todoFactory('Clean my room2', '1/2/2021', 'test', 'a', 'Low');
-
-cleaning.list.push(room1);
-cleaning.list.push(room2);
-
-console.log({ projects });
+const getData = () => {
+  projects = JSON.parse(localStorage.getItem('projects'))
+}
 
 const displayProject = (project, listElement) => {
+  // getData();
   listElement.innerHTML = '';
   const listItems = project.list;
   listItems.forEach(item => {
@@ -39,13 +44,45 @@ const displayProject = (project, listElement) => {
   });
 };
 
+if (projects.length === 0) {
+  const defaultProject = projectFactory('default');
+  const cleaning = projectFactory('cleaning');
+  const cooking = projectFactory('cooking');
+
+  projects.push(defaultProject);
+  projects.push(cleaning);
+  projects.push(cooking);
+
+  console.log('initialize');
+  console.log({ projects });
+} else {
+  const currentProject = projects.find(o => o.name === 'default');
+  const listElement = document.querySelector('#default-list');
+  displayProject(currentProject, listElement);
+}
+
+
+// const room1 = todoFactory('Clean my room', '1/2/2021', 'test', 'a', 'Low');
+// const room2 = todoFactory('Clean my room2', '1/2/2021', 'test', 'a', 'Low');
+
+// cleaning.list.push(room1);
+// cleaning.list.push(room2);
+
+// console.log({ projects });
+
+
 // Adds a task to the project (project is a string)
 const addTaskToProject = (task, project) => {
   const currentProject = projects.find(o => o.name === project);
   currentProject.list.push(task);
   const listElement = document.querySelector('#default-list');
+  saveData();
   displayProject(currentProject, listElement);
 };
+
+//  store the list of tasks
+// let listElement = [];
+
 
 // Parses the form input
 const forminput = () => {
