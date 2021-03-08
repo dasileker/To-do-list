@@ -2,18 +2,16 @@ import './styles.scss';
 
 // console.log('Webpack works!');
 
-let projects ;
+let projects;
 
 if (localStorage.getItem('projects') == null) {
   projects = [];
   console.log('no local storeg');
 } else {
-  projects = JSON.parse(localStorage.getItem('projects'))
+  projects = JSON.parse(localStorage.getItem('projects'));
   console.log('local storage present');
   console.log({ projects });
 }
-
-
 
 const todoFactory = (title, duedate, desc, note, priority) => ({
   title, duedate, desc, note, priority,
@@ -26,15 +24,14 @@ const projectFactory = (name) => {
 };
 
 const saveData = () => {
-  localStorage.setItem('projects', JSON.stringify(projects))
-}
+  localStorage.setItem('projects', JSON.stringify(projects));
+};
 
 const getData = () => {
-  projects = JSON.parse(localStorage.getItem('projects'))
-}
+  projects = JSON.parse(localStorage.getItem('projects'));
+};
 
 const modifyItem = (item) => {
-
   console.log('tell');
   console.log(item);
   const title = document.querySelector('#inputtitle');
@@ -43,51 +40,67 @@ const modifyItem = (item) => {
   const note = document.querySelector('#inputnote');
   const priority = document.querySelector('#inputpriority');
 
-  title.value = item.title
-  date.value = item.duedate
-  description.value = item.description
-  note.value = item.note
-  priority.value = item.priority
+  title.value = item.title;
+  date.value = item.duedate;
+  description.value = item.description;
+  note.value = item.note;
+  priority.value = item.priority;
 
   const btn1 = document.querySelector('#tasksubmit');
   btn1.textContent = 'modify task';
-  console.log(item.duedate)
-
-
-}
+  console.log(item.duedate);
+};
 
 // const deleteItem = (item) => {
-  
+
 // }
 
-const displayProject = (project, listElement) => {
-  // getData();
-  listElement.innerHTML = '';
-  const listItems = project.list;
-  listItems.forEach(item => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `${item.title}, Date: ${item.duedate}, Priority: ${item.priority}`;
-    // const testBtn = document.createElement('button');
-    const modifyBtn = document.createElement('button');
-    const deleteBtn = document.createElement('button');
-    modifyBtn.innerHTML = '<img src="https://img.icons8.com/fluent-systems-regular/15/000000/edit-property.png" />';
-    deleteBtn.innerHTML = '<img src="https://img.icons8.com/material-sharp/15/000000/delete-forever.png" />';
+// <div class="container" id="default-project">
+//   <h3>Default </h3>
+//   <ul id="default-list">
+//   </ul>
+// </div>
 
-    // const expand = document.querySelector('modifyBtn');
-    // const loose = document.querySelector('deleteBtn');
-    
+const displayProject = () => {
+  const projectsMain = document.querySelector('#all-projects-content');
+  document.querySelector('#all-projects-content').innerHTML = '';
 
-    // if (modifyBtn != null ){
-    //   modifyBtn.addEventListener('onclick', modifyItem);
-    // }
-    modifyBtn.onclick = () => {
-      return modifyItem(item);
-    } 
-    
-    // loose.addEventListener('onclick', deleteItem);
+  projects.forEach((project) => {
+    const container = document.createElement('div');
+    container.setAttribute('class', `container ${project.name}-project`);
 
-    listItem.append(modifyBtn, deleteBtn);
-    listElement.appendChild(listItem);
+    const heading = document.createElement('h3');
+    heading.textContent = project.name;
+
+    const listElement = document.createElement('ul');
+    listElement.id = `${project.name}-list`;
+
+    container.append(heading, listElement);
+    projectsMain.appendChild(container);
+
+    const listItems = project.list;
+    listItems.forEach(item => {
+      const listItem = document.createElement('li');
+      listItem.textContent = `${item.title}, Date: ${item.duedate}, Priority: ${item.priority}`;
+      // const testBtn = document.createElement('button');
+      const modifyBtn = document.createElement('button');
+      const deleteBtn = document.createElement('button');
+      modifyBtn.innerHTML = '<img src="https://img.icons8.com/fluent-systems-regular/15/000000/edit-property.png" />';
+      deleteBtn.innerHTML = '<img src="https://img.icons8.com/material-sharp/15/000000/delete-forever.png" />';
+
+      // const expand = document.querySelector('modifyBtn');
+      // const loose = document.querySelector('deleteBtn');
+
+      // if (modifyBtn != null ){
+      //   modifyBtn.addEventListener('onclick', modifyItem);
+      // }
+      modifyBtn.onclick = () => modifyItem(item);
+
+      // loose.addEventListener('onclick', deleteItem);
+
+      listItem.append(modifyBtn, deleteBtn);
+      listElement.appendChild(listItem);
+    });
   });
 };
 
@@ -108,7 +121,6 @@ if (projects.length === 0) {
   displayProject(currentProject, listElement);
 }
 
-
 // const room1 = todoFactory('Clean my room', '1/2/2021', 'test', 'a', 'Low');
 // const room2 = todoFactory('Clean my room2', '1/2/2021', 'test', 'a', 'Low');
 
@@ -117,19 +129,17 @@ if (projects.length === 0) {
 
 // console.log({ projects });
 
-
 // Adds a task to the project (project is a string)
 const addTaskToProject = (task, project) => {
   const currentProject = projects.find(o => o.name === project);
   currentProject.list.push(task);
   const listElement = document.querySelector('#default-list');
   saveData();
-  displayProject(currentProject, listElement);
+  displayProject(project);
 };
 
 //  store the list of tasks
 // let listElement = [];
-
 
 // Parses the form input
 const forminput = () => {
@@ -139,9 +149,10 @@ const forminput = () => {
   const description = document.querySelector('#inputdescription').value;
   const note = document.querySelector('#inputnote').value;
   const priority = document.querySelector('#inputpriority').value;
+  const projectname = document.querySelector('#inputproject').value;
 
   const currentTask = todoFactory(title, date, description, note, priority);
-  addTaskToProject(currentTask, 'default');
+  addTaskToProject(currentTask, projectname);
 };
 
 const addTask = (title, date, description, note, priority) => {

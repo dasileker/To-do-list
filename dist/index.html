@@ -1,76 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
   <title>Todo List</title>
   <script type="text/javascript" src="main.js" defer>
 
   </script>
 </head>
+
 <body>
- <h1> Todo List </h1>
+  <h1> Todo List </h1>
 
- <div class="container">
-  <form id="task-form" class=" row g-3">
-    <div class="col-md-4">
-      <!-- title -->
-      <label for="inputtitle" class="form-label">Title</label>
-      <input type="text" class="form-control" id="inputtitle" placeholder="Title">
-    </div>
-    <!-- due date -->
-    <div class="col-md-4">
-      <label for="inputdate" class="form-label">Due-date</label>
-      <input type="date" class="form-control" id="inputdate">
-    </div>
-    <!-- description -->
-    <div class="col-8">
-      <label for="inputdescription" class="form-label">Description</label>
-      <textarea type="textarea" class="form-control" id="inputdescription" placeholder="Description"></textarea>
-    </div>
-    <!-- note-->
-    <div class="col-md-6">
-      <label for="inputnote" class="form-label">Note</label>
-      <input type="text" class="form-control" id="inputnote" placeholder="Please Leave a Note">
-    </div>
-    <!-- priority -->
-    <div class="col-md-2">
-      <label for="inputpriority" class="form-label">Priority</label>
-      <select id="inputpriority" class="form-select">
-        <option selected>Choose...</option>
-        <option>Low</option>
-        <option>Medium</option>
-        <option>High</option>
-      </select>
-    </div>
-    <div class="col-12">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="gridCheck">
-        <label class="form-check-label" for="gridCheck">
-          Check me out
-        </label>
+  <div class="container">
+    <form id="task-form" class=" row g-3">
+      <div class="col-md-4">
+        <!-- title -->
+        <label for="inputtitle" class="form-label">Title</label>
+        <input type="text" class="form-control" id="inputtitle" placeholder="Title">
       </div>
-    </div>
-    <div class="col-12">
-      <button id="tasksubmit"  type="button" class="btn btn-primary">Create Task</button>
-    </div>
-  </form>
- </div>
+      <!-- due date -->
+      <div class="col-md-4">
+        <label for="inputdate" class="form-label">Due-date</label>
+        <input type="date" class="form-control" id="inputdate">
+      </div>
+      <!-- description -->
+      <div class="col-8">
+        <label for="inputdescription" class="form-label">Description</label>
+        <textarea type="textarea" class="form-control" id="inputdescription" placeholder="Description"></textarea>
+      </div>
+      <!-- note-->
+      <div class="col-md-6">
+        <label for="inputnote" class="form-label">Note</label>
+        <input type="text" class="form-control" id="inputnote" placeholder="Please Leave a Note">
+      </div>
+      <!-- priority -->
+      <div class="col-md-2">
+        <label for="inputpriority" class="form-label">Priority</label>
+        <select id="inputpriority" class="form-select">
+          <option selected>Choose...</option>
+          <option>Low</option>
+          <option>Medium</option>
+          <option>High</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <div class="col-md-6">
+          <label for="inputproject" class="form-label">Project</label>
+          <input type="text" class="form-control" id="inputproject" placeholder="Project name">
+        </div>
+      </div>
+      <div class="col-12">
+        <button id="tasksubmit" type="button" class="btn btn-primary">Create Task</button>
+      </div>
+    </form>
+  </div>
 
-<div class="container" id="default-project">
-  <h3>Default </h3>
-  <!-- <img src="https://img.icons8.com/fluent-systems-regular/15/000000/edit-property.png" />
-  <img src="https://img.icons8.com/material-sharp/15/000000/delete-forever.png" /> -->
- <ul id="default-list">
-  
- </ul>
-
-</div>
+  <div id="all-projects-content">
+    <!-- <div class="container" id="default-project">
+      <h3>Default </h3>
+      <ul id="default-list">
+      </ul>
+    </div> -->
 
 
+  </div>
 
 
 
@@ -81,9 +78,7 @@
 
 
 
-
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 </body>
+
 </html>
