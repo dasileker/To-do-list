@@ -18,7 +18,6 @@ const todoFactory = (title, duedate, desc, note, priority) => ({
 });
 
 const projectFactory = (name) => {
-  // getData();
   const list = [];
   return { name, list };
 };
@@ -29,6 +28,11 @@ const saveData = () => {
 
 const getData = () => {
   projects = JSON.parse(localStorage.getItem('projects'));
+};
+
+const projectNameList = (list) => {
+  projects.forEach((project) => list.push(project.name));
+  return list;
 };
 
 const modifyItem = (item) => {
@@ -55,11 +59,15 @@ const modifyItem = (item) => {
 
 // }
 
-// <div class="container" id="default-project">
-//   <h3>Default </h3>
-//   <ul id="default-list">
-//   </ul>
-// </div>
+const formatDate = (input) => {
+  const options = {
+    year: 'numeric', month: 'long', day: 'numeric',
+  };
+
+  const date = new Date(input);
+  const result = date.toLocaleDateString('en-US', options);
+  return result;
+};
 
 const displayProject = () => {
   const projectsMain = document.querySelector('#all-projects-content');
@@ -81,7 +89,9 @@ const displayProject = () => {
     const listItems = project.list;
     listItems.forEach(item => {
       const listItem = document.createElement('li');
-      listItem.textContent = `${item.title}, Date: ${item.duedate}, Priority: ${item.priority}`;
+      const customDate = formatDate(item.duedate);
+      // Saturday, September 17, 2016
+      listItem.textContent = `${item.title}, Date: ${customDate}, Priority: ${item.priority}`;
       // const testBtn = document.createElement('button');
       const modifyBtn = document.createElement('button');
       const deleteBtn = document.createElement('button');
@@ -106,19 +116,13 @@ const displayProject = () => {
 
 if (projects.length === 0) {
   const defaultProject = projectFactory('default');
-  const cleaning = projectFactory('cleaning');
-  const cooking = projectFactory('cooking');
 
   projects.push(defaultProject);
-  projects.push(cleaning);
-  projects.push(cooking);
 
   console.log('initialize');
   console.log({ projects });
 } else {
-  const currentProject = projects.find(o => o.name === 'default');
-  const listElement = document.querySelector('#default-list');
-  displayProject(currentProject, listElement);
+  displayProject();
 }
 
 // const room1 = todoFactory('Clean my room', '1/2/2021', 'test', 'a', 'Low');
@@ -133,7 +137,6 @@ if (projects.length === 0) {
 const addTaskToProject = (task, project) => {
   const currentProject = projects.find(o => o.name === project);
   currentProject.list.push(task);
-  const listElement = document.querySelector('#default-list');
   saveData();
   displayProject(project);
 };
@@ -149,25 +152,33 @@ const forminput = () => {
   const description = document.querySelector('#inputdescription').value;
   const note = document.querySelector('#inputnote').value;
   const priority = document.querySelector('#inputpriority').value;
-  const projectname = document.querySelector('#inputproject').value;
+  let projectname = document.querySelector('#inputproject').value;
+
+  projectname = (projectname === '') ? 'default' : projectname;
 
   const currentTask = todoFactory(title, date, description, note, priority);
+  const list = projectNameList([]);
+  if (!list.includes(projectname)) {
+    const newProject = projectFactory(projectname);
+    projects.push(newProject);
+  }
+
   addTaskToProject(currentTask, projectname);
 };
 
-const addTask = (title, date, description, note, priority) => {
-  this.title = title;
-  this.date = date;
-  this.description = description;
-  this.note = note;
-  this.priority = priority;
-};
+// const addTask = (title, date, description, note, priority) => {
+//   this.title = title;
+//   this.date = date;
+//   this.description = description;
+//   this.note = note;
+//   this.priority = priority;
+// };
 
-addTask.title;
-addTask.date;
-addTask.description;
-addTask.note;
-addTask.priority;
+// addTask.title;
+// addTask.date;
+// addTask.description;
+// addTask.note;
+// addTask.priority;
 
 // console.log(addTask);
 
