@@ -33,6 +33,33 @@ const getData = () => {
   projects = JSON.parse(localStorage.getItem('projects'))
 }
 
+const modifyItem = (item) => {
+
+  console.log('tell');
+  console.log(item);
+  const title = document.querySelector('#inputtitle');
+  const date = document.querySelector('#inputdate');
+  const description = document.querySelector('#inputdescription');
+  const note = document.querySelector('#inputnote');
+  const priority = document.querySelector('#inputpriority');
+
+  title.value = item.title
+  date.value = item.duedate
+  description.value = item.description
+  note.value = item.note
+  priority.value = item.priority
+
+  const btn1 = document.querySelector('#tasksubmit');
+  btn1.textContent = 'modify task';
+  console.log(item.duedate)
+
+
+}
+
+// const deleteItem = (item) => {
+  
+// }
+
 const displayProject = (project, listElement) => {
   // getData();
   listElement.innerHTML = '';
@@ -40,6 +67,26 @@ const displayProject = (project, listElement) => {
   listItems.forEach(item => {
     const listItem = document.createElement('li');
     listItem.textContent = `${item.title}, Date: ${item.duedate}, Priority: ${item.priority}`;
+    // const testBtn = document.createElement('button');
+    const modifyBtn = document.createElement('button');
+    const deleteBtn = document.createElement('button');
+    modifyBtn.innerHTML = '<img src="https://img.icons8.com/fluent-systems-regular/15/000000/edit-property.png" />';
+    deleteBtn.innerHTML = '<img src="https://img.icons8.com/material-sharp/15/000000/delete-forever.png" />';
+
+    // const expand = document.querySelector('modifyBtn');
+    // const loose = document.querySelector('deleteBtn');
+    
+
+    // if (modifyBtn != null ){
+    //   modifyBtn.addEventListener('onclick', modifyItem);
+    // }
+    modifyBtn.onclick = () => {
+      return modifyItem(item);
+    } 
+    
+    // loose.addEventListener('onclick', deleteItem);
+
+    listItem.append(modifyBtn, deleteBtn);
     listElement.appendChild(listItem);
   });
 };
