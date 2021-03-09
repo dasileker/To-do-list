@@ -13,9 +13,23 @@ if (localStorage.getItem('projects') == null) {
   console.log({ projects });
 }
 
-const todoFactory = (title, duedate, desc, note, priority) => ({
-  title, duedate, desc, note, priority,
-});
+let id;
+
+if (localStorage.getItem('currentId') == null) {
+id = 0;
+  console.log('no Id');
+} else {
+  id = JSON.parse(localStorage.getItem('currentId'));
+  console.log('Id present');
+  console.log({ id });
+}
+
+const todoFactory = (title, duedate, desc, note, priority) => {
+  id += 1;
+  return {
+    id, title, duedate, desc, note, priority,
+  }
+};
 
 const projectFactory = (name) => {
   const list = [];
@@ -24,16 +38,58 @@ const projectFactory = (name) => {
 
 const saveData = () => {
   localStorage.setItem('projects', JSON.stringify(projects));
+  localStorage.setItem('currentId', id);
 };
 
 const getData = () => {
   projects = JSON.parse(localStorage.getItem('projects'));
 };
 
+// delete task from projects
+
+const deleteItem = (task, project) => {
+  console.log( { task, project });
+  const currentProject = projects.find(o => o.name === project.name);
+  console.log({currentProject});
+  currentProject.list = currentProject.list.filter(x => x.id != task.id);
+
+  // projects = projects.filter(i => i != currentProject);
+  // projects.push(newProject);
+  saveData();
+  displayProject(project);
+
+}
+
+// const deleteOption = document.querySelector('deleteBtn');
+// deleteOption.setAttribute('class', `container ${project.name}-project`);
+// deleteOption.onclick = deleteItem;
+
 const projectNameList = (list) => {
   projects.forEach((project) => list.push(project.name));
   return list;
 };
+
+const saveModifiedData = () => {
+  const form = document.querySelector('#task-form');
+  const title = document.querySelector('#inputtitle').value;
+  const date = document.querySelector('#inputdate').value;
+  const description = document.querySelector('#inputdescription').value;
+  const note = document.querySelector('#inputnote').value;
+  const priority = document.querySelector('#inputpriority').value;
+  let projectname = document.querySelector('#inputproject').value;
+
+  projectname = (projectname === '') ? 'default' : projectname;
+
+  const currentTask = todoFactory(title, date, description, note, priority);
+  const list = projectNameList([]);
+  if (!list.includes(projectname)) {
+    const newProject = projectFactory(projectname);
+    projects.push(newProject);
+  } else {
+
+  }
+
+}
 
 const modifyItem = (item) => {
   console.log('tell');
@@ -50,10 +106,22 @@ const modifyItem = (item) => {
   note.value = item.note;
   priority.value = item.priority;
 
-  const btn1 = document.querySelector('#tasksubmit');
-  btn1.textContent = 'modify task';
+  const newBtn = document.createElement('button');
+  const div = document.querySelector('#btn-div');
+  div.innerHTML = '';
+  newBtn.setAttribute('class', 'btn btn-primary');
+  newBtn.setAttribute('id', 'tasksubmit');
+  newBtn.textContent = 'Modify Task';
+
+  div.append(newBtn);
+  newBtn.onclick = saveModifiedData;
+
+
+  // const btn1 = document.querySelector('#tasksubmit');
+  // btn1.textContent = 'modify task';
   console.log(item.duedate);
 };
+
 
 // const deleteItem = (item) => {
 
@@ -105,6 +173,7 @@ const displayProject = () => {
       //   modifyBtn.addEventListener('onclick', modifyItem);
       // }
       modifyBtn.onclick = () => modifyItem(item);
+      deleteBtn.onclick = () => deleteItem(item, project);
 
       // loose.addEventListener('onclick', deleteItem);
 
@@ -162,7 +231,7 @@ const forminput = () => {
     const newProject = projectFactory(projectname);
     projects.push(newProject);
   }
-
+  console.log(currentTask);
   addTaskToProject(currentTask, projectname);
 };
 
