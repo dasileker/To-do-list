@@ -118,10 +118,10 @@ const deleteItem = (task, project) => {
 // deleteOption.setAttribute('class', `container ${project.name}-project`);
 // deleteOption.onclick = deleteItem;
 
-// const projectNameList = (list) => {
-//   projects.forEach((project) => list.push(project.name));
-//   return list;
-// };
+const projectNameList = (list) => {
+  projects.forEach((project) => list.push(project.name));
+  return list;
+};
 
 
 // save modified data + removing it to the Existing + new projects
