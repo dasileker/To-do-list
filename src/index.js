@@ -1,29 +1,16 @@
 import './styles.scss';
 
-// console.log('Webpack works!');
+import { projectFactory } from './factory';
 
-// project Main initialization
-let projects;
+import { initialize, saveData} from './storagedata';
 
-if (localStorage.getItem('projects') == null) {
-  projects = [];
-  console.log('no local storeg');
-} else {
-  projects = JSON.parse(localStorage.getItem('projects'));
-  console.log('local storage present');
-  console.log({ projects });
-}
 
-let id;
+const initialData = initialize([], 0);
 
-if (localStorage.getItem('currentId') == null) {
-  id = 0;
-  console.log('no Id');
-} else {
-  id = JSON.parse(localStorage.getItem('currentId'));
-  console.log('Id present');
-  console.log({ id });
-}
+const projects = initialData.projects;
+
+let id = initialData.id;
+
 
 // crating To-do's
 const todoFactory = (title, duedate, desc, note, priority, temp = 'Empty') => {
@@ -37,21 +24,19 @@ const todoFactory = (title, duedate, desc, note, priority, temp = 'Empty') => {
   };
 };
 
-const projectFactory = (name) => {
-  const list = [];
-  return { name, list };
-};
+// const projectFactory = (name) => {
+//   const list = [];
+//   return { name, list };
+// };
 
 
 // store the data in the Projects + list's
-const saveData = () => {
-  localStorage.setItem('projects', JSON.stringify(projects));
-  localStorage.setItem('currentId', id);
-};
+// const saveData = () => {
+//   localStorage.setItem('projects', JSON.stringify(projects));
+//   localStorage.setItem('currentId', id);
+// };
 
-const getData = () => {
-  projects = JSON.parse(localStorage.getItem('projects'));
-};
+
 
 ///  dispaly the To-do list's
 const displayProject = () => {
@@ -110,7 +95,7 @@ const deleteItem = (task, project) => {
 
   // projects = projects.filter(i => i != currentProject);
   // projects.push(newProject);
-  saveData();
+  saveData(projects, id);
   displayProject();
 };
 
@@ -167,7 +152,7 @@ const saveModifiedData = (item, project) => {
     // projects.push(newProject);
     deleteItem(oldTask, oldProject);
   }
-  saveData();
+  saveData(projects, id);
   displayProject();
 
   return false;
@@ -241,7 +226,7 @@ if (projects.length === 0) {
 const addTaskToProject = (task, project) => {
   const currentProject = projects.find(o => o.name === project);
   currentProject.list.push(task);
-  saveData();
+  saveData(projects, id);
   displayProject(project);
 };
 
