@@ -22,6 +22,19 @@ h1 {
 }
 h3 {
   text-transform: capitalize;
+  margin:  10px;
 }
 
+.project-box {
+  border: 1px solid black;
+  border-radius:  20px;
+  width: 900px;
+  height: 100px;
+  margin-top: 10px;
+} 
+
+.project-box ul li button {
+  float: right;
+  margin-right: 20px;
+}
 

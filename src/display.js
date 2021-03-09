@@ -16,8 +16,7 @@ const displayProjects = (projects) => {
 
   projects.forEach((project) => {
     const container = document.createElement('div');
-    container.setAttribute('class', `container ${project.name}-project`);
-
+    container.setAttribute('class', ` ${project.name}-project project-box`);
     const heading = document.createElement('h3');
     heading.textContent = project.name;
 
@@ -37,7 +36,9 @@ const displayProjects = (projects) => {
       const modifyBtn = document.createElement('button');
       const deleteBtn = document.createElement('button');
       modifyBtn.innerHTML = '<img src="https://img.icons8.com/fluent-systems-regular/15/000000/edit-property.png" />';
+      modifyBtn.setAttribute('class',' btn btn-primary')
       deleteBtn.innerHTML = '<img src="https://img.icons8.com/material-sharp/15/000000/delete-forever.png" />';
+      deleteBtn.setAttribute('class', 'delete-btn btn btn-danger')
 
       // const expand = document.querySelector('modifyBtn');
       // const loose = document.querySelector('deleteBtn');
