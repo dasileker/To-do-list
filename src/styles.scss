@@ -1,14 +1,12 @@
- * {
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
- }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-  background: #DCE35B;
-  background: -webkit-linear-gradient(to right, #8ef791, #9ff77d);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #6aeb6e, #6be66b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+  background: #dce35b;
+  background: linear-gradient(to right, #6aeb6e, #6be66b);
 }
 
 .box {
@@ -17,17 +15,18 @@ body {
 }
 
 h1 {
-  padding-top:  10px;
-  color:  darkgreen;
+  padding-top: 10px;
+  color: darkgreen;
 }
+
 h3 {
   text-transform: capitalize;
-  margin:  10px;
+  margin: 10px;
 }
 
 .project-box {
   border: 1px solid black;
-  border-radius:  20px;
+  border-radius: 20px;
   width: 900px;
   margin-top: 10px;
 }
@@ -35,7 +34,6 @@ h3 {
 .project-box ul li {
   margin: 0.5% 0;
 }
-
 
 .project-box ul li button {
   // float: right;

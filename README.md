@@ -6,13 +6,13 @@ This is a mini-project that allows you to
 - Display the current tasks in the todo list
 - Display different projects(categories)
 - Modify an existing task
-- Delete a task from the list 
+- Delete a task from the list
 
 ![screenshot](./img/screenshot.png)
 
 ### Live Demo
 
-[Live Demo Link]()
+[Live Demo Link](https://raw.githack.com/dasileker/To-do-list/Feature/dist/index.html)
 
 ## Built With
 
@@ -52,7 +52,7 @@ This is a mini-project that allows you to
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https).
+Feel free to check the [issues page](https://github.com/dasileker/To-do-list/issues/1).
 
 ## Show your support
 
