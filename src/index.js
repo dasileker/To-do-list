@@ -2,6 +2,7 @@ import './styles.scss';
 
 // console.log('Webpack works!');
 
+// project Main initialization
 let projects;
 
 if (localStorage.getItem('projects') == null) {
@@ -24,8 +25,9 @@ if (localStorage.getItem('currentId') == null) {
   console.log({ id });
 }
 
-const todoFactory = (title, duedate, desc, note, priority, temp = -777) => {
-  if (temp === -777) {
+// crating To-do's
+const todoFactory = (title, duedate, desc, note, priority, temp = 'Empty') => {
+  if (temp === 'Empty') {
     id += 1;
   } else {
     id = temp;
@@ -40,6 +42,8 @@ const projectFactory = (name) => {
   return { name, list };
 };
 
+
+// store the data in the Projects + list's
 const saveData = () => {
   localStorage.setItem('projects', JSON.stringify(projects));
   localStorage.setItem('currentId', id);
@@ -49,6 +53,7 @@ const getData = () => {
   projects = JSON.parse(localStorage.getItem('projects'));
 };
 
+///  dispaly the To-do list's
 const displayProject = () => {
   const projectsMain = document.querySelector('#all-projects-content');
   document.querySelector('#all-projects-content').innerHTML = '';
@@ -113,11 +118,13 @@ const deleteItem = (task, project) => {
 // deleteOption.setAttribute('class', `container ${project.name}-project`);
 // deleteOption.onclick = deleteItem;
 
-const projectNameList = (list) => {
-  projects.forEach((project) => list.push(project.name));
-  return list;
-};
+// const projectNameList = (list) => {
+//   projects.forEach((project) => list.push(project.name));
+//   return list;
+// };
 
+
+// save modified data + removing it to the Existing + new projects
 const saveModifiedData = (item, project) => {
   const title = document.querySelector('#inputtitle').value;
   const date = document.querySelector('#inputdate').value;
@@ -166,6 +173,8 @@ const saveModifiedData = (item, project) => {
   return false;
 };
 
+
+// display the modify data in the form
 const modifyItem = (item, project) => {
   console.log('tell');
   console.log(item);
@@ -198,10 +207,7 @@ const modifyItem = (item, project) => {
   console.log(item.duedate);
 };
 
-// const deleteItem = (item) => {
-
-// }
-
+// create the input due date
 const formatDate = (input) => {
   const options = {
     year: 'numeric', month: 'long', day: 'numeric',
@@ -280,6 +286,8 @@ const forminput = () => {
 
 // console.log(addTask);
 
+
+// Main create task button
 const btn = document.querySelector('#tasksubmit');
 
 btn.onclick = forminput;
