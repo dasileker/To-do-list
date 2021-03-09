@@ -16,7 +16,7 @@ if (localStorage.getItem('projects') == null) {
 let id;
 
 if (localStorage.getItem('currentId') == null) {
-id = 0;
+  id = 0;
   console.log('no Id');
 } else {
   id = JSON.parse(localStorage.getItem('currentId'));
@@ -24,11 +24,15 @@ id = 0;
   console.log({ id });
 }
 
-const todoFactory = (title, duedate, desc, note, priority) => {
-  id += 1;
+const todoFactory = (title, duedate, desc, note, priority, temp = -777) => {
+  if (temp === -777) {
+    id += 1;
+  } else {
+    id = temp;
+  }
   return {
     id, title, duedate, desc, note, priority,
-  }
+  };
 };
 
 const projectFactory = (name) => {
@@ -43,98 +47,6 @@ const saveData = () => {
 
 const getData = () => {
   projects = JSON.parse(localStorage.getItem('projects'));
-};
-
-// delete task from projects
-
-const deleteItem = (task, project) => {
-  console.log( { task, project });
-  const currentProject = projects.find(o => o.name === project.name);
-  console.log({currentProject});
-  currentProject.list = currentProject.list.filter(x => x.id != task.id);
-
-  // projects = projects.filter(i => i != currentProject);
-  // projects.push(newProject);
-  saveData();
-  displayProject(project);
-
-}
-
-// const deleteOption = document.querySelector('deleteBtn');
-// deleteOption.setAttribute('class', `container ${project.name}-project`);
-// deleteOption.onclick = deleteItem;
-
-const projectNameList = (list) => {
-  projects.forEach((project) => list.push(project.name));
-  return list;
-};
-
-const saveModifiedData = () => {
-  const form = document.querySelector('#task-form');
-  const title = document.querySelector('#inputtitle').value;
-  const date = document.querySelector('#inputdate').value;
-  const description = document.querySelector('#inputdescription').value;
-  const note = document.querySelector('#inputnote').value;
-  const priority = document.querySelector('#inputpriority').value;
-  let projectname = document.querySelector('#inputproject').value;
-
-  projectname = (projectname === '') ? 'default' : projectname;
-
-  const currentTask = todoFactory(title, date, description, note, priority);
-  const list = projectNameList([]);
-  if (!list.includes(projectname)) {
-    const newProject = projectFactory(projectname);
-    projects.push(newProject);
-  } else {
-
-  }
-
-}
-
-const modifyItem = (item) => {
-  console.log('tell');
-  console.log(item);
-  const title = document.querySelector('#inputtitle');
-  const date = document.querySelector('#inputdate');
-  const description = document.querySelector('#inputdescription');
-  const note = document.querySelector('#inputnote');
-  const priority = document.querySelector('#inputpriority');
-
-  title.value = item.title;
-  date.value = item.duedate;
-  description.value = item.description;
-  note.value = item.note;
-  priority.value = item.priority;
-
-  const newBtn = document.createElement('button');
-  const div = document.querySelector('#btn-div');
-  div.innerHTML = '';
-  newBtn.setAttribute('class', 'btn btn-primary');
-  newBtn.setAttribute('id', 'tasksubmit');
-  newBtn.textContent = 'Modify Task';
-
-  div.append(newBtn);
-  newBtn.onclick = saveModifiedData;
-
-
-  // const btn1 = document.querySelector('#tasksubmit');
-  // btn1.textContent = 'modify task';
-  console.log(item.duedate);
-};
-
-
-// const deleteItem = (item) => {
-
-// }
-
-const formatDate = (input) => {
-  const options = {
-    year: 'numeric', month: 'long', day: 'numeric',
-  };
-
-  const date = new Date(input);
-  const result = date.toLocaleDateString('en-US', options);
-  return result;
 };
 
 const displayProject = () => {
@@ -172,7 +84,7 @@ const displayProject = () => {
       // if (modifyBtn != null ){
       //   modifyBtn.addEventListener('onclick', modifyItem);
       // }
-      modifyBtn.onclick = () => modifyItem(item);
+      modifyBtn.onclick = () => modifyItem(item, project);
       deleteBtn.onclick = () => deleteItem(item, project);
 
       // loose.addEventListener('onclick', deleteItem);
@@ -181,6 +93,123 @@ const displayProject = () => {
       listElement.appendChild(listItem);
     });
   });
+};
+
+// delete task from projects
+
+const deleteItem = (task, project) => {
+  console.log({ task, project });
+  const currentProject = projects.find(o => o.name === project.name);
+  console.log({ currentProject });
+  currentProject.list = currentProject.list.filter(x => x.id !== task.id);
+
+  // projects = projects.filter(i => i != currentProject);
+  // projects.push(newProject);
+  saveData();
+  displayProject();
+};
+
+// const deleteOption = document.querySelector('deleteBtn');
+// deleteOption.setAttribute('class', `container ${project.name}-project`);
+// deleteOption.onclick = deleteItem;
+
+const projectNameList = (list) => {
+  projects.forEach((project) => list.push(project.name));
+  return list;
+};
+
+const saveModifiedData = (item, project) => {
+  const title = document.querySelector('#inputtitle').value;
+  const date = document.querySelector('#inputdate').value;
+  const description = document.querySelector('#inputdescription').value;
+  const note = document.querySelector('#inputnote').value;
+  const priority = document.querySelector('#inputpriority').value;
+  let projectname = document.querySelector('#inputproject').value;
+
+  projectname = (projectname === '') ? 'default' : projectname;
+
+  const currentId = item.id;
+
+  const oldProject = projects.find(o => o.name === project.name);
+
+  const newProject = projects.find(o => o.name === projectname);
+
+  // console.log('Old and New Project');
+  // console.log({ oldProject, currentProject });
+
+  const oldTask = oldProject.list.find(x => x.id === currentId);
+
+  const newTask = todoFactory(title, date, description, note, priority, currentId);
+
+  // 1. New project
+  // 2. Existing and Same project
+  // 3. Existing but different projects
+
+  if (newProject == null) {
+    console.log('This is a new project');
+    const newProject = projectFactory(projectname);
+    newProject.list.push(newTask);
+    projects.push(newProject);
+    deleteItem(oldTask, oldProject);
+  } else if (newProject.name === oldProject.name) {
+    console.log('Modifying the existing project');
+    newProject.list = newProject.list.map(x => ((x.id === currentId) ? newTask : x));
+  } else {
+    console.log('Changing the project to an existing project');
+    newProject.list.push(newTask);
+    // projects.push(newProject);
+    deleteItem(oldTask, oldProject);
+  }
+  saveData();
+  displayProject();
+
+  return false;
+};
+
+const modifyItem = (item, project) => {
+  console.log('tell');
+  console.log(item);
+  const title = document.querySelector('#inputtitle');
+  const date = document.querySelector('#inputdate');
+  const description = document.querySelector('#inputdescription');
+  const note = document.querySelector('#inputnote');
+  const priority = document.querySelector('#inputpriority');
+  const projectform = document.querySelector('#inputproject');
+
+  title.value = item.title;
+  date.value = item.duedate;
+  description.value = item.description;
+  note.value = item.note;
+  priority.value = item.priority;
+  projectform.value = project.name;
+
+  const newBtn = document.createElement('button');
+  const div = document.querySelector('#btn-div');
+  div.innerHTML = '';
+  newBtn.setAttribute('class', 'btn btn-primary');
+  newBtn.setAttribute('id', 'tasksubmit');
+  newBtn.textContent = 'Modify Task';
+
+  div.append(newBtn);
+  newBtn.onclick = () => saveModifiedData(item, project);
+
+  // const btn1 = document.querySelector('#tasksubmit');
+  // btn1.textContent = 'modify task';
+  console.log(item.duedate);
+};
+
+// const deleteItem = (item) => {
+
+// }
+
+const formatDate = (input) => {
+  const options = {
+    year: 'numeric', month: 'long', day: 'numeric',
+  };
+
+  const date = new Date(input);
+  const result = date.toLocaleDateString('en-US', options);
+  return result;
 };
 
 if (projects.length === 0) {
