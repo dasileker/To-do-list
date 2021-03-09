@@ -1,4 +1,4 @@
- * { 
+ * {
    margin: 0;
    padding: 0;
    box-sizing: border-box;
@@ -29,12 +29,15 @@ h3 {
   border: 1px solid black;
   border-radius:  20px;
   width: 900px;
-  height: 100px;
   margin-top: 10px;
-} 
-
-.project-box ul li button {
-  float: right;
-  margin-right: 20px;
 }
 
+.project-box ul li {
+  margin: 0.5% 0;
+}
+
+
+.project-box ul li button {
+  // float: right;
+  // margin-right: 20px;
+}

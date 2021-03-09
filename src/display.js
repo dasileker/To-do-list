@@ -1,4 +1,4 @@
-import { modifyItem, deleteItem } from './index';
+import { modifyItem, deleteItem } from './index'; // eslint-disable-line
 
 const formatDate = (input) => {
   const options = {
@@ -36,9 +36,9 @@ const displayProjects = (projects) => {
       const modifyBtn = document.createElement('button');
       const deleteBtn = document.createElement('button');
       modifyBtn.innerHTML = '<img src="https://img.icons8.com/fluent-systems-regular/15/000000/edit-property.png" />';
-      modifyBtn.setAttribute('class',' btn btn-primary')
+      modifyBtn.setAttribute('class', ' btn btn-primary');
       deleteBtn.innerHTML = '<img src="https://img.icons8.com/material-sharp/15/000000/delete-forever.png" />';
-      deleteBtn.setAttribute('class', 'delete-btn btn btn-danger')
+      deleteBtn.setAttribute('class', 'delete-btn btn btn-danger');
 
       // const expand = document.querySelector('modifyBtn');
       // const loose = document.querySelector('deleteBtn');
