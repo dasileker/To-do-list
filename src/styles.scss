@@ -1,9 +1,27 @@
+ * { 
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+ }
 
 body {
-  background-color: white;
+  background: #DCE35B;
+  background: -webkit-linear-gradient(to right, #8ef791, #9ff77d);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #6aeb6e, #6be66b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
+.box {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
 
+h1 {
+  padding-top:  10px;
+  color:  darkgreen;
+}
 h3 {
   text-transform: capitalize;
 }
+
+
