@@ -8,11 +8,13 @@ This is a mini-project that allows you to
 - Modify an existing task
 - Delete a task from the list
 
-![screenshot](./img/screenshot.png)
+![Form Screenshot](./img/screenshot1.png)
+
+![Projects Screenshot](./img/screenshot2.png)
 
 ### Live Demo
 
-[Live Demo Link](https://raw.githack.com/dasileker/To-do-list/Feature/dist/index.html)
+[Live Demo Link](https://rawcdn.githack.com/dasileker/To-do-list/23e859ea84c544538c270f6427dcd78bc29af673/dist/index.html)
 
 ## Built With
 
