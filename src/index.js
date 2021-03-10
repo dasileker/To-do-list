@@ -37,14 +37,27 @@ const projectNameList = (list) => {
   return list;
 };
 
+const validateForm = (title, date, priority) => !(title === '' || date === '' || priority === 'Choose...');
+
+const setAlert = (alert, status) => {
+  alert.style.display = 'block';
+  if (status === 'success') {
+    alert.textContent = 'Task created succesfully!';
+    alert.setAttribute('class', 'box alert alert-success');
+  } else if (status === 'danger') {
+    alert.textContent = 'Title, Date, and Priority are required fields';
+    alert.setAttribute('class', 'box alert alert-danger');
+  }
+};
+
 // save modified data + removing it to the Existing + new projects
 const saveModifiedData = (item, project) => {
-  const title = document.querySelector('#inputtitle').value;
+  const title = document.querySelector('#inputtitle').value.trim();
   const date = document.querySelector('#inputdate').value;
-  const description = document.querySelector('#inputdescription').value;
+  const description = document.querySelector('#inputdescription').value.trim();
   const note = document.querySelector('#inputnote').value;
   const priority = document.querySelector('#inputpriority').value;
-  let projectname = document.querySelector('#inputproject').value;
+  let projectname = document.querySelector('#inputproject').value.trim().toLowerCase();
 
   projectname = (projectname === '') ? 'default' : projectname;
 
@@ -124,22 +137,30 @@ const addTaskToProject = (task, project) => {
 
 // Parses the form input
 const forminput = () => {
-  const title = document.querySelector('#inputtitle').value;
+  const title = document.querySelector('#inputtitle').value.trim();
   const date = document.querySelector('#inputdate').value;
-  const description = document.querySelector('#inputdescription').value;
+  const description = document.querySelector('#inputdescription').value.trim();
   const note = document.querySelector('#inputnote').value;
   const priority = document.querySelector('#inputpriority').value;
-  let projectname = document.querySelector('#inputproject').value;
+  let projectname = document.querySelector('#inputproject').value.trim().toLowerCase();
 
-  projectname = (projectname === '') ? 'default' : projectname;
+  const isValidForm = validateForm(title, date, priority);
+  const alert = document.querySelector('#alert');
 
-  const currentTask = todoFactory(title, date, description, note, priority);
-  const list = projectNameList([]);
-  if (!list.includes(projectname)) {
-    const newProject = projectFactory(projectname);
-    projects.push(newProject);
+  if (isValidForm) {
+    projectname = (projectname === '') ? 'default' : projectname;
+
+    const currentTask = todoFactory(title, date, description, note, priority);
+    const list = projectNameList([]);
+    if (!list.includes(projectname)) {
+      const newProject = projectFactory(projectname);
+      projects.push(newProject);
+    }
+    addTaskToProject(currentTask, projectname);
+    setAlert(alert, 'success');
+  } else {
+    setAlert(alert, 'danger');
   }
-  addTaskToProject(currentTask, projectname);
 };
 
 // Main create task button
