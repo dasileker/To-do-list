@@ -30,9 +30,8 @@ const displayProjects = (projects) => {
     listItems.forEach(item => {
       const listItem = document.createElement('li');
       const customDate = formatDate(item.duedate);
-      // Saturday, September 17, 2016
       listItem.textContent = `${item.title}, Date: ${customDate}, Priority: ${item.priority}`;
-      // const testBtn = document.createElement('button');
+
       const modifyBtn = document.createElement('button');
       const deleteBtn = document.createElement('button');
       modifyBtn.innerHTML = '<img src="https://img.icons8.com/fluent-systems-regular/15/000000/edit-property.png" />';
@@ -40,16 +39,8 @@ const displayProjects = (projects) => {
       deleteBtn.innerHTML = '<img src="https://img.icons8.com/material-sharp/15/000000/delete-forever.png" />';
       deleteBtn.setAttribute('class', 'delete-btn btn btn-danger');
 
-      // const expand = document.querySelector('modifyBtn');
-      // const loose = document.querySelector('deleteBtn');
-
-      // if (modifyBtn != null ){
-      //   modifyBtn.addEventListener('onclick', modifyItem);
-      // }
       modifyBtn.onclick = () => modifyItem(item, project);
       deleteBtn.onclick = () => deleteItem(item, project);
-
-      // loose.addEventListener('onclick', deleteItem);
 
       listItem.append(modifyBtn, deleteBtn);
       listElement.appendChild(listItem);

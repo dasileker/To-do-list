@@ -104,21 +104,7 @@ const modifyItem = (item, project) => {
 
   div.append(newBtn);
   newBtn.onclick = () => saveModifiedData(item, project);
-
-  // const btn1 = document.querySelector('#tasksubmit');
-  // btn1.textContent = 'modify task';
 };
-
-// create the input due date
-// const formatDate = (input) => {
-//   const options = {
-//     year: 'numeric', month: 'long', day: 'numeric',
-//   };
-
-//   const date = new Date(input);
-//   const result = date.toLocaleDateString('en-US', options);
-//   return result;
-// };
 
 if (projects.length === 0) {
   const defaultProject = projectFactory('default');
@@ -135,9 +121,6 @@ const addTaskToProject = (task, project) => {
   saveData(projects, id);
   displayProjects(projects);
 };
-
-//  store the list of tasks
-// let listElement = [];
 
 // Parses the form input
 const forminput = () => {
