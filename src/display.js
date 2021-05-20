@@ -14,6 +14,18 @@ const displayProjects = (projects) => {
   const projectsMain = document.querySelector('#all-projects-content');
   document.querySelector('#all-projects-content').innerHTML = '';
 
+  const newProject = document.createElement('div');
+  newProject.setAttribute('class', `default-list-project project-box`);
+
+  const newTitle = document.createElement('h3');
+  newTitle.textContent ='default';
+
+  const addList = document.createElement('ul');
+  addList.innerHTML = `<li>workout</li><li>13/07/2021</li><li>meduim</li>`;
+
+  newProject.append(newTitle, addList);
+  projectsMain.appendChild(newProject);
+
   projects.forEach((project) => {
     const container = document.createElement('div');
     container.setAttribute('class', ` ${project.name}-project project-box`);

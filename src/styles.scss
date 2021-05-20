@@ -56,3 +56,16 @@ h3 {
   margin: 3% 20%;
   display: none;
 }
+
+.default-list {
+  display: flex;
+}
+
+// ul {
+//   display: inline-block;
+//   // width: 150vh;
+//   justify-content: space-between;
+// }
+.default-list .ul li {
+  display: inline;
+}

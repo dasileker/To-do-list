@@ -37,7 +37,7 @@ const projectNameList = (list) => {
   return list;
 };
 
-const validateForm = (title, date, priority) => !(title === '' || date === '' || priority === 'Choose...');
+const validateForm = (title, date, priority, note) => !(title === 'Empty' || date === 'Empty' || priority === 'Empty' || note === 'Empty');
 
 const setAlert = (alert, status) => {
   alert.style.display = 'block';
@@ -144,13 +144,13 @@ const forminput = () => {
   const priority = document.querySelector('#inputpriority').value;
   let projectname = document.querySelector('#inputproject').value.trim().toLowerCase();
 
-  const isValidForm = validateForm(title, date, priority);
+  const isValidForm = validateForm(projectname);
   const alert = document.querySelector('#alert');
 
   if (isValidForm) {
     projectname = (projectname === '') ? 'default' : projectname;
 
-    const currentTask = todoFactory(title, date, description, note, priority);
+    const currentTask = todoFactory(title, date, priority, note);
     const list = projectNameList([]);
     if (!list.includes(projectname)) {
       const newProject = projectFactory(projectname);
